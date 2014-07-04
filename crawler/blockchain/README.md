@@ -22,7 +22,9 @@
 
 
 ## Install: 
-gem install mongo nokogiri wombat
+```bash
+~$ gem install mongo nokogiri wombat
+```
 
 ## Run:
 Currently supports Ruby 1.9.3
