@@ -33,6 +33,11 @@ def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thre
       p error.io
       redo
     end
+    File.open("data/#{user_id}", "w") do |file|
+      file.puts doc
+      file.close
+    end
+
     name = ""
     bitcoin_addr = ""
     doc.css('#bodyarea>table>tr>td>table>tr:nth-child(2)>td:nth-child(1)>table>tr').each do |ele|
