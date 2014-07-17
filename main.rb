@@ -60,7 +60,7 @@ end
 total_thread = 5
 total_user_id = 1000000
 thread_pool = []
-address_out = MaiWriter.new("address.out", "w")
+address_out = MaiWriter.new("address.out", "a")
 
 id_finished = Set.new
 id_finished_filename = "id_finished.out"
