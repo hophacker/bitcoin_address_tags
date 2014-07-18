@@ -18,6 +18,7 @@ class MaiWriter
   end
 end
 
+SLEEP_TIME_FOR_ONE_THREAD = 1
 def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thread, total_user_id)
   (0..total_user_id/total_thread).each do |i|
     user_id = total_thread * i + thread_num
@@ -27,6 +28,7 @@ def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thre
     end
     p "user_id #{user_id} start"
     begin
+      sleep SLEEP_TIME_FOR_ONE_THREAD
       doc = Nokogiri::HTML(open("https://bitcointalk.org/index.php?action=profile;u=#{user_id}"))
     rescue OpenURI::HTTPError => error
       sleep 10 + Random.rand(total_thread)
