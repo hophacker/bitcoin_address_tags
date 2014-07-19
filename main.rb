@@ -2,21 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'thread'
 require 'set'
-
-
-
-class MaiWriter
-  def initialize(filename, mode)
-    @file = File.open(filename, mode)
-    @mutex = Mutex.new
-  end
-  def write(str)
-    @mutex.synchronize{
-      @file.puts str
-      @file.flush
-    }
-  end
-end
+require './MaiWriter.rb'
 
 SLEEP_TIME_FOR_ONE_THREAD = 1
 def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thread, total_user_id)
