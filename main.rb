@@ -16,7 +16,7 @@ def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thre
     begin
       sleep SLEEP_TIME_FOR_ONE_THREAD
       doc = Nokogiri::HTML(open("https://bitcointalk.org/index.php?action=profile;u=#{user_id}"))
-    rescue OpenURI::HTTPError => error
+      rescue OpenURI::HTTPError => error
       sleep 10 + Random.rand(total_thread)
       p error.io
       redo
