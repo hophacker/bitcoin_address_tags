@@ -18,6 +18,13 @@ module Ticker
       def initialize(cookie)
         @@cookie = cookie
       end
+
+      def mai_open(url)
+        return Nokogiri::HTML(open(url))
+        rescue 
+          return nil
+      end
+
       def get_transactions_btcextw
         url = "https://www.btcextw.com/RT_transaction.aspx"
         doc = Nokogiri.HTML(open(url, "Cookie" => @@cookie["btcextw"]))
@@ -59,25 +66,41 @@ module Ticker
 
 
       def get_price_btcextw
-        value = Nokogiri::HTML(open("https://www.btcextw.com/login.aspx")).css('#top > table >  tr > td #ctl00_Label17').text
-        return {'Price'=>value, 'Transactions' => get_transactions_btcextw}
+        doc = mai_open("https://www.btcextw.com/login.aspx")
+        if doc == nil
+        else
+          value = doc.css('#top > table >  tr > td #ctl00_Label17').text
+          return {'Price'=>value, 'Transactions' => get_transactions_btcextw}
+        end
       end
       def get_price_bitcoin_tw
-        doc = Nokogiri::HTML(open("http://www.bitcoin-tw.com/"))
-        p doc.css("#btc-bid-field")
-        return {'Bid' => doc.css("#btc-bid-field").text, 
-                'Ask' => doc.css("#btc-ask-field").text}
+        doc = mai_open("http://www.bitcoin-tw.com/")
+        if doc == nil
+          return {}
+        else
+          p doc.css("#btc-bid-field")
+          return {'Bid' => doc.css("#btc-bid-field").text, 
+                  'Ask' => doc.css("#btc-ask-field").text}
+        end
       end
       def get_price_bitquick
-        doc = Nokogiri::HTML(open("https://www.bitquick.tw/"))
-        str = doc.css("#post-3032 > div:nth-child(1) > div > div > div > div > h2:nth-child(2)").text
-        price = str.gsub!(/[\D]*/, "")
-        return {'Bitstamp' => price}
+        doc = mai_open("https://www.bitquick.tw/")
+        if doc == nil
+          return {}
+        else
+          str = doc.css("#post-3032 > div:nth-child(1) > div > div > div > div > h2:nth-child(2)").text
+          price = str.gsub!(/[\D]*/, "")
+          return {'Bitstamp' => price}
+        end
+      end
+
+      def get_price_bitoex
+        doc = Nokogiri::HTML(open("https://bitoex.com/", :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
+        return {'Price' => doc.css("#wrap > div.index_row > div > a > span.dny_rate").text}
       end
 
       def get_price_bitage
-        doc = Nokogiri::HTML(open("https://www.bitage.tw/", 
-                                  :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
+        doc = Nokogiri::HTML(open("https://www.bitage.tw/", :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE))
         prices = {}
         i = 0
         title=""
@@ -91,12 +114,25 @@ module Ticker
         end
         return prices
       end
+      
+      def get_price_terarows
+
+        doc = mai_open("http://bitcoin.terarows.com/")
+        if doc == nil
+          return {}
+        else
+          return {'Last Dealt Price' => doc.css("#LastPrice").text}
+        end
+      end
+
       def get_prices
         return {
           #'bitcoin-tw' => get_price_bitcoin_tw,
           'bitquick' => get_price_bitquick,
           'bitage' => get_price_bitage,
-          'btcextw' => get_price_btcextw
+          'btcextw' => get_price_btcextw,
+          'bitoex' => get_price_bitoex,
+          'bitcoin_terarows' => get_price_terarows
         }
       end
       def show
@@ -110,6 +146,7 @@ end
 
 
 Ticker::Sources::PriceCrawler.new({"btcextw" => "ASP.NET_SessionId=uv2ryjgwcjkazuiiordr5uwa; _ga=GA1.2.1471105860.1405710858"}).show
+
 #tw_prices.each do |name, price|
 #printf("%-10s:\tPrice:%-15s Bid:%-15s Ask:%-20s\n", name, price['Price'], price['Bid'], price['Ask'])
 #end
