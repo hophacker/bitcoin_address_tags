@@ -21,7 +21,7 @@ def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thre
       p error.io
       redo
     end
-    File.open("data/#{user_id}", "w") do |file|
+    File.open("../profile_data/#{user_id}", "w") do |file|
       file.puts doc
       file.close
     end

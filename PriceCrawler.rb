@@ -110,7 +110,6 @@ end
 
 
 Ticker::Sources::PriceCrawler.new({"btcextw" => "ASP.NET_SessionId=uv2ryjgwcjkazuiiordr5uwa; _ga=GA1.2.1471105860.1405710858"}).show
-
 #tw_prices.each do |name, price|
 #printf("%-10s:\tPrice:%-15s Bid:%-15s Ask:%-20s\n", name, price['Price'], price['Bid'], price['Ask'])
 #end
