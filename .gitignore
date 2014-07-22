@@ -3,4 +3,7 @@ address.out
 id_finished.out
 data/
 data/*
-       
+coinbase.rb
+base.rb
+temp.rb
+price_crawler.rb

@@ -4,7 +4,7 @@ require 'socket'
 require 'open-uri'
 require 'thread'
 require 'set'
-require './MaiWriter.rb'
+require './mai_writer'
 require 'openssl'
 require 'pp'
 

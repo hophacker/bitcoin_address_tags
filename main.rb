@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'thread'
 require 'set'
-require './mai_writer.rb'
+require './mai_writer'
 
 SLEEP_TIME_FOR_ONE_THREAD = 1
 def crawl_user(id_finished, address_out, id_finished_out, thread_num, total_thread, total_user_id)
