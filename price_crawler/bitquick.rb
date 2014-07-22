@@ -1,4 +1,3 @@
-require './html_base'
 module Ticker
   module Sources
     class Bitquick < HtmlBase

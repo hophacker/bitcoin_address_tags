@@ -1,4 +1,3 @@
-require './html_base'
 # For btcextw, you need the coockie to get transaction information
 # The cookie string can be found by press <F12> in Chrome
 # Maitainer: Jie Feng, jiefeng.hopkins@gmail.com

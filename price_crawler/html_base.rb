@@ -1,4 +1,3 @@
-require './base'
 require 'nokogiri'
 require 'openssl'
 require 'socket'

@@ -1,4 +1,3 @@
-require './html_base'
 module Ticker
   module Sources
     class BitcoinTw < HtmlBase
@@ -19,4 +18,4 @@ module Ticker
     end
   end
 end
-puts Ticker::Sources::BitcoinTw.new.fetch
+#puts Ticker::Sources::BitcoinTw.new.fetch
